@@ -4,6 +4,7 @@
  */
 
 import * as MRE from '@microsoft/mixed-reality-extension-sdk';
+import { initSound } from './helpers';
 
 /**
  * The main class of this app. All the logic goes here.
@@ -13,7 +14,7 @@ export default class HelloWorld {
 	private cube: MRE.Actor = null;
 	private assets: MRE.AssetContainer;
 
-	constructor(private context: MRE.Context) {
+	constructor(private context: MRE.Context, private baseUrl: string) {
 		this.context.onStarted(() => this.started());
 	}
 
@@ -126,6 +127,9 @@ export default class HelloWorld {
 		// When clicked, do a 360 sideways.
 		buttonBehavior.onClick(_ => {
 			flipAnim.play();
+			let url = `${this.baseUrl}/samp.wav`;
+			initSound(this.assets, this.cube, url, false);
+			console.log(url);
 		});
 	}
 
